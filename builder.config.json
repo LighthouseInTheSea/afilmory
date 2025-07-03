@@ -1,6 +1,6 @@
 {
   "repo": {
-    "enable": false,
+    "enable": true,
     "url": "https://github.com/LighthouseInTheSea/gallery-assets"
   },
   "storage": {
