@@ -1,0 +1,33 @@
+{
+  "repo": {
+    "enable": true,
+    "url": "https://github.com/LighthouseInTheSea/gallery-assets"
+  },
+  "storage": {
+    "provider": "s3",
+    "bucket": "photography-image",
+    "region": "auto",
+    "prefix": "",
+    "customDomain": "https://photography.woodenman.top",
+    "endpoint": "https://9822cdddde6b5de52348a35de2a2bef9.r2.cloudflarestorage.com"
+  },
+  "options": {
+    "defaultConcurrency": 8,
+    "enableLivePhotoDetection": true,
+    "showProgress": true,
+    "showDetailedStats": true
+  },
+  "logging": {
+    "verbose": true,
+    "level": "info",
+    "outputToFile": false
+  },
+  "performance": {
+    "worker": {
+      "workerCount": 8,
+      "timeout": 30000,
+      "useClusterMode": true,
+      "workerConcurrency": 2
+    }
+  }
+}
