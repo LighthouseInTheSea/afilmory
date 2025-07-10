@@ -3,6 +3,7 @@ import { AnimatePresence, m } from 'motion/react'
 import { useCallback, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import type { ReactZoomPanPinchRef } from 'react-zoom-pan-pinch'
+import { useMediaQuery } from 'usehooks-ts'
 
 import { useShowContextMenu } from '~/atoms/context-menu'
 import { clsxm } from '~/lib/cn'
@@ -38,6 +39,7 @@ export const ProgressiveImage = ({
   isCurrentImage = false,
   isLivePhoto = false,
   livePhotoVideoUrl,
+  isHDR = false,
   loadingIndicatorRef,
 }: ProgressiveImageProps) => {
   const { t } = useTranslation()
@@ -98,6 +100,8 @@ export const ProgressiveImage = ({
 
   const showContextMenu = useShowContextMenu()
 
+  const isHDRSupported = useMediaQuery('(dynamic-range: high)')
+
   return (
     <div
       className={clsxm('relative overflow-hidden', className)}
@@ -125,13 +129,14 @@ export const ProgressiveImage = ({
       {/* 高分辨率图片 - 只在成功加载且非错误状态时显示 */}
       {highResLoaded && blobSrc && isCurrentImage && !error && (
         <div
+          className="absolute inset-0 h-full w-full"
           onContextMenu={(e) => {
             const items = createContextMenuItems(blobSrc, alt, t)
             showContextMenu(items, e)
           }}
         >
-          {/* LivePhoto 模式使用 DOMImageViewer */}
-          {isLivePhoto ? (
+          {/* LivePhoto 或 HDR 模式使用 DOMImageViewer */}
+          {isLivePhoto || (isHDR && isHDRSupported) ? (
             <DOMImageViewer
               ref={domImageViewerRef}
               onZoomChange={onDOMTransformed}
